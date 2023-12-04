@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CompAndSave/email-countdown-api"
+    "url": "git+https://github.com/CompAndSave/email-countdown-serverless"
   },
   "author": "Andrew Yeung",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CompAndSave/email-countdown-api/issues"
+    "url": "https://github.com/CompAndSave/email-countdown-serverless/issues"
   },
   "dependencies": {
     "debug": "^4.3.4",
