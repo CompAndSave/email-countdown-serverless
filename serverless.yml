@@ -1,0 +1,53 @@
+service: email-countdown-api-serverless
+
+package:
+  patterns:
+    - '!target/**'
+    - '!node_modules/canvas/**'
+    - '!node_modules/**/@types/**'
+    - '!node_modules/**/*.d.ts'
+    - '!node_modules/**/.yarn-integrity'
+    - '!node_modules/**/.bin'
+    - '!tmp/'
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-lambda-warmup
+  - serverless-plugin-common-excludes
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'stg'}
+  region: ${opt:region, 'us-west-2'}  # You can choose your AWS region
+  versionFunctions: false
+  timeout: 5
+  memorySize: 2048
+  environment:
+    NODE_ENV: ${file(./serverless-config.js):getNodeEnv}
+    ENABLE_SERVERLESS: true
+  layers:
+    - YOUR_LAMBDA_CANVAS_LAYER # Generate the canvas layer via https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:990551184979:applications~lambda-layer-canvas-nodejs
+
+custom:
+  warmup:
+    schedule: 'rate(5 minutes)' # Schedule expression for the rule (defaults to "rate(5 minutes)")
+    stages: # [Optional] Stages to keep lambdas warm (all stages by default) 
+      - prod  # Only use the warmer at prod stage
+
+functions:
+  app:
+    handler: app-serverless.handler
+    vpc: # Optional VPC. But if you use VPC then both subproperties (securityGroupIds and subnetIds) are required
+      securityGroupIds:
+        - YOUR_SECURITY_GROUP_IDS
+      subnetIds:
+        - YOUR_SUBNET_IDS
+    events:
+      - alb:
+          listenerArn: YOUR_ALB_ARN
+          priority: 11    # You can choose the proper priority for the rule for this email counter at ALB
+          conditions:
+            host:   # Host to be used to access the email countdown api
+              - YOUR_HOST_DOMAIN
+            path: YOUR_PATH  # Optional: Path to access the email countdown

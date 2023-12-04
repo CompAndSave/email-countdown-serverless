@@ -1,0 +1,42 @@
+{
+  "name": "email-countdown-serverless",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "volta run --env NODE_ENV=production nodemon ./bin/www",
+    "prod": "volta run --env NODE_ENV=production nodemon ./bin/www",
+    "lint": "eslint .",
+    "deploy": "volta run --env NODE_ENV=production sls deploy --stage prod",
+    "deployf": "volta run --env NODE_ENV=production sls deploy function --stage prod -f app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CompAndSave/email-countdown-api"
+  },
+  "author": "Andrew Yeung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CompAndSave/email-countdown-api/issues"
+  },
+  "dependencies": {
+    "debug": "^4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "fs": "^0.0.1-security",
+    "gif-countdown": "^0.4.0",
+    "http-errors": "^2.0.0",
+    "node-gzip": "^1.1.2",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-http": "^3.2.0",
+    "serverless-plugin-common-excludes": "^4.0.0",
+    "serverless-plugin-lambda-warmup": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0"
+  },
+  "volta": {
+    "node": "18.18.2",
+    "npm": "10.2.3"
+  }
+}

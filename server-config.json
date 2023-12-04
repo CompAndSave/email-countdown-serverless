@@ -1,0 +1,4 @@
+{
+  "DefaultTimeZone": "America/Los_Angeles",
+  "ServerlessUrlPath": "email-counter"
+}
